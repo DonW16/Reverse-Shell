@@ -15,7 +15,7 @@ def help_menu():
     Commands:
     list
     help
-    select (int)
+    session (int)
     ''')
     pass
 
@@ -89,10 +89,12 @@ def start_turtle():
         cmd = input('turtle> ')
         if cmd == 'list':
             list_connections()
-        elif 'select' in cmd:
+        elif 'session' in cmd:
             conn = get_target(cmd)
             if conn is not None:
                 send_target_commands(conn)
+        elif 'help' in cmd:
+            help_menu()
 
         else:
             print("Command not recognized")
@@ -120,7 +122,7 @@ def list_connections():
 # Selecting the target
 def get_target(cmd):
     try:
-        target = cmd.replace('select ', '')  # target = id
+        target = cmd.replace('session ', '')  # target = id
         target = int(target)
         conn = all_connections[target]
         print("You are now connected to :" + str(all_address[target][0]))
@@ -129,7 +131,7 @@ def get_target(cmd):
         # 192.168.0.4> dir
 
     except:
-        print("Selection not valid")
+        print("Session not valid.")
         return None
 
 
