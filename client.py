@@ -3,7 +3,7 @@ import os
 import subprocess
 
 s = socket.socket()
-host = '104.236.209.167'
+host = '127.0.0.1'
 port = 9999
 
 s.connect((host, port))

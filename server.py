@@ -10,6 +10,14 @@ queue = Queue()
 all_connections = []
 all_address = []
 
+def help_menu():
+    print('''
+    Commands:
+    list
+    help
+    select (int)
+    ''')
+    pass
 
 # Create a Socket ( connect two computers)
 def create_socket():
